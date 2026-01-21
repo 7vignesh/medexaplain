@@ -36,11 +36,11 @@ notepad .env
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/medexplain
+MONGODB_URI=
 OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxx
 FIREBASE_PROJECT_ID=your-project-id
 FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
-FIREBASE_CLIENT_EMAIL=firebase-adminsdk-xxxxx@your-project.iam.gserviceaccount.com
+FIREBASE_CLIENT_EMAIL=
 JWT_SECRET=your-super-secret-jwt-key-min-32-characters
 ENCRYPTION_KEY=your-32-character-encryption-key-here
 NODE_ENV=development
