@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useAuth } from '@/lib/contexts/AuthContext';
 import Link from 'next/link';
 import { Mail, Lock, User as UserIcon } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ export default function SignupPage() {
     e.preventDefault();
     
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match');
+      toast.error('Passwords do not match');
       return;
     }
 

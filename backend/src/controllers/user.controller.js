@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Report = require('../models/Report');
 
 /**
  * Get current user profile
@@ -55,8 +56,6 @@ const updateProfile = async (req, res) => {
  */
 const getStats = async (req, res) => {
   try {
-    const Report = require('../models/Report');
-    
     const totalReports = await Report.countDocuments({ userId: req.user._id });
     const reportsThisMonth = await Report.countDocuments({
       userId: req.user._id,
