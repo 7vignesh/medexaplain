@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { encryptData, decryptData } = require('../utils/encryption');
 
 /**
  * User Schema
@@ -59,9 +58,6 @@ const userSchema = new mongoose.Schema({
 }, {
   timestamps: true, // Adds createdAt and updatedAt
 });
-
-// Index for faster queries
-userSchema.index({ email: 1 });
 
 // Method to update last login
 userSchema.methods.updateLastLogin = function() {
