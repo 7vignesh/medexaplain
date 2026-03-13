@@ -1,5 +1,4 @@
-const { generateWithRetry } = require('../config/langchain');
-
+const { generateWithRetry } = require('../config/openrouter');
 /**
  * Health Risk Assessment Service
  * Analyzes medical parameters to generate risk scores, disease predictions, and clinical insights
@@ -54,7 +53,8 @@ class HealthRiskService {
    * @returns {String} Raw risk assessment from Gemini
    */
   async analyzeWithGemini(formattedParams, healthSummary) {
-    console.time('GeminiRiskAnalysis');
+    const timeLabel = `RiskAnalysis-${Date.now()}-${Math.random().toString(36).substring(7)}`;
+    console.time(timeLabel);
     const prompt = `You are a medical AI analyzing health parameters. Respond ONLY with valid JSON.
 
 Parameters:
@@ -96,10 +96,10 @@ CRITICAL RULES:
 
     try {
       const response = await generateWithRetry(prompt);
-      console.timeEnd('GeminiRiskAnalysis');
+      console.timeEnd(timeLabel);
       return response;
     } catch (error) {
-      console.timeEnd('GeminiRiskAnalysis');
+      console.timeEnd(timeLabel);
       throw error;
     }
   }
@@ -184,31 +184,6 @@ CRITICAL RULES:
     }
   }
 
-  /**
-   * Calculate risk level category from seriousness score
-   * @param {Number} level - Seriousness level (1-10)
-   * @returns {String} Risk category
-   */
-  getRiskCategory(level) {
-    if (level <= 2) return 'Minimal';
-    if (level <= 4) return 'Low';
-    if (level <= 6) return 'Moderate';
-    if (level <= 8) return 'High';
-    return 'Critical';
-  }
-
-  /**
-   * Get color code for risk visualization
-   * @param {Number} level - Seriousness level (1-10)
-   * @returns {String} Hex color code
-   */
-  getRiskColor(level) {
-    if (level <= 2) return '#10b981'; // Green
-    if (level <= 4) return '#3b82f6'; // Blue
-    if (level <= 6) return '#f59e0b'; // Amber
-    if (level <= 8) return '#ef4444'; // Red
-    return '#991b1b'; // Dark red
-  }
 }
 
 module.exports = new HealthRiskService();

@@ -1,11 +1,11 @@
-const { 
-  generateParameterExplanation, 
-  generateHealthSummary 
-} = require('../config/langchain');
+const {
+  generateParameterExplanation,
+  generateHealthSummary
+} = require('../config/openrouter');
 
 /**
  * AI Service for generating medical parameter explanations
- * Uses LangChain + OpenAI for natural language generation
+ * Uses Mock data for development and testing
  */
 class AIService {
   /**
