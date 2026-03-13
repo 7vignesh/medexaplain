@@ -1,18 +1,16 @@
 export interface User {
   _id: string;
-  firebaseUid: string;
   email: string;
   displayName?: string;
   photoURL?: string;
-  provider: 'email' | 'google';
-  preferences: {
+  preferences?: {
     notifications: boolean;
     theme: 'light' | 'dark' | 'auto';
   };
-  isActive: boolean;
-  lastLoginAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  isActive?: boolean;
+  lastLoginAt?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Parameter {

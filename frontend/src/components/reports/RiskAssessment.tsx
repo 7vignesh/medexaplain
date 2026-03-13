@@ -1,37 +1,13 @@
 'use client';
 
 import { AlertCircle, TrendingUp, Heart, Shield } from 'lucide-react';
-
-interface DiseaseRisk {
-  disease: string;
-  riskPercentage: number;
-  keyIndicators: string[];
-  explanation: string;
-}
-
-interface InfluencingParameter {
-  name: string;
-  impactScore: number;
-  reason: string;
-}
-
-interface RiskAssessmentData {
-  seriousnessLevel: number;
-  diseaseRisks: DiseaseRisk[];
-  topInfluencingParameters: InfluencingParameter[];
-  visualJustification: string;
-  recommendedActions: string[];
-}
+import { RiskAssessment as RiskAssessmentData } from '@/types';
 
 interface RiskAssessmentProps {
   data: RiskAssessmentData;
   loading?: boolean;
 }
 
-/**
- * RiskAssessment Component
- * Displays comprehensive health risk assessment with seriousness levels, disease risks, and clinical insights
- */
 export default function RiskAssessment({ data, loading = false }: RiskAssessmentProps) {
   if (loading) {
     return (
@@ -49,6 +25,7 @@ export default function RiskAssessment({ data, loading = false }: RiskAssessment
   }
 
   const seriousnessLevel = data.seriousnessLevel || 5;
+
   const getRiskCategory = (level: number) => {
     if (level <= 2) return 'Minimal';
     if (level <= 4) return 'Low';
@@ -76,8 +53,8 @@ export default function RiskAssessment({ data, loading = false }: RiskAssessment
           <div>
             <h3 className="font-semibold text-red-900">⚠️ Important Medical Disclaimer</h3>
             <p className="text-red-800 text-sm mt-2">
-              This AI-generated health risk assessment is <strong>NOT a medical diagnosis</strong> and should not be used for self-diagnosis. 
-              It is for educational purposes only. <strong>Always consult with a qualified healthcare provider</strong> before making any health decisions. 
+              This AI-generated health risk assessment is <strong>NOT a medical diagnosis</strong> and should not be used for self-diagnosis.
+              It is for educational purposes only. <strong>Always consult with a qualified healthcare provider</strong> before making any health decisions.
               The AI analysis has limitations and may not account for your complete medical history.
             </p>
           </div>
@@ -94,7 +71,6 @@ export default function RiskAssessment({ data, loading = false }: RiskAssessment
           <Heart className={`${colors.text}`} size={32} />
         </div>
 
-        {/* Seriousness Gauge */}
         <div className="mt-6">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-semibold text-gray-700">Seriousness Level</span>
@@ -120,13 +96,11 @@ export default function RiskAssessment({ data, loading = false }: RiskAssessment
           <Shield size={20} className="text-blue-600" />
           Clinical Analysis & Justification
         </h3>
-        <div className="prose prose-blue max-w-none">
-          <p className="text-gray-700 leading-relaxed">
-            {(data.visualJustification && data.visualJustification.trim().length > 0) 
-              ? data.visualJustification 
-              : 'Generating detailed clinical analysis...'}
-          </p>
-        </div>
+        <p className="text-gray-700 leading-relaxed text-sm">
+          {(data.visualJustification && data.visualJustification.trim().length > 0)
+            ? data.visualJustification
+            : 'Generating detailed clinical analysis...'}
+        </p>
       </div>
 
       {/* Disease Risks */}
@@ -150,7 +124,6 @@ export default function RiskAssessment({ data, loading = false }: RiskAssessment
                   </span>
                 </div>
 
-                {/* Risk Gauge */}
                 <div className="mb-3">
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
@@ -164,7 +137,6 @@ export default function RiskAssessment({ data, loading = false }: RiskAssessment
                   </div>
                 </div>
 
-                {/* Key Indicators */}
                 {risk.keyIndicators && risk.keyIndicators.length > 0 && (
                   <div className="mb-3">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Key Indicators:</p>
@@ -178,7 +150,6 @@ export default function RiskAssessment({ data, loading = false }: RiskAssessment
                   </div>
                 )}
 
-                {/* Explanation */}
                 <p className="text-sm text-gray-600">{risk.explanation}</p>
               </div>
             ))}
@@ -203,7 +174,6 @@ export default function RiskAssessment({ data, loading = false }: RiskAssessment
                   </span>
                 </div>
 
-                {/* Impact Gauge */}
                 <div className="mb-3">
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div
@@ -240,7 +210,7 @@ export default function RiskAssessment({ data, loading = false }: RiskAssessment
       {/* Final Disclaimer */}
       <div className="bg-gray-100 border border-gray-300 rounded-lg p-4">
         <p className="text-xs text-gray-600 text-center">
-          <strong>Remember:</strong> This assessment is provided as educational content. It does not replace professional medical advice. 
+          <strong>Remember:</strong> This assessment is provided as educational content. It does not replace professional medical advice.
           Please consult with a qualified healthcare provider for accurate diagnosis and treatment recommendations.
         </p>
       </div>

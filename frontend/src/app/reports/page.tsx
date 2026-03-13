@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useAuth } from '@/lib/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
@@ -40,12 +40,15 @@ export default function ReportsPage() {
     }
   };
 
-  const filteredReports = reports.filter(report => {
+  const filteredReports = useMemo(() => reports.filter(report => {
     if (filter === 'all') return true;
     if (filter === 'normal') return report.abnormalParameters === 0;
     if (filter === 'abnormal') return report.abnormalParameters > 0;
     return true;
-  });
+  }), [reports, filter]);
+
+  const normalCount = useMemo(() => reports.filter(r => r.abnormalParameters === 0).length, [reports]);
+  const abnormalCount = useMemo(() => reports.filter(r => r.abnormalParameters > 0).length, [reports]);
 
   const getStatusColor = (report: Report) => {
     if (report.criticalParameters > 0) return 'bg-red-100 text-red-800';
@@ -93,7 +96,7 @@ export default function ReportsPage() {
                 : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
             }`}
           >
-            Normal ({reports.filter(r => r.abnormalParameters === 0).length})
+            Normal ({normalCount})
           </button>
           <button
             onClick={() => setFilter('abnormal')}
@@ -103,7 +106,7 @@ export default function ReportsPage() {
                 : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
             }`}
           >
-            Abnormal ({reports.filter(r => r.abnormalParameters > 0).length})
+            Abnormal ({abnormalCount})
           </button>
         </div>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { getReportById, deleteReport, generateRiskAssessment } from '@/lib/api';
 import { Report } from '@/types';
@@ -8,7 +8,7 @@ import Navbar from '@/components/layout/Navbar';
 import ParameterCard from '@/components/reports/ParameterCard';
 import HealthSummary from '@/components/reports/HealthSummary';
 import TrendChart from '@/components/reports/TrendChart';
-import RiskAssessment from '@/components/report/RiskAssessment';
+import RiskAssessment from '@/components/reports/RiskAssessment';
 import { Trash2, Download, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
@@ -18,11 +18,15 @@ export default function ReportDetailPage() {
   const router = useRouter();
   const [report, setReport] = useState<Report | null>(null);
   const [loading, setLoading] = useState(true);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     if (params.id) {
       fetchReport(params.id as string);
     }
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [params.id]);
 
   const fetchReport = async (id: string) => {
@@ -53,20 +57,17 @@ export default function ReportDetailPage() {
   const triggerRiskAssessment = async (id: string) => {
     try {
       await generateRiskAssessment(id);
-      // Poll for updates
-      const interval = setInterval(async () => {
+      intervalRef.current = setInterval(async () => {
         const res = await getReportById(id);
         const updatedReport = res.data.data;
-        
-        // Check if completed or failed
         if (updatedReport.riskAssessmentStatus === 'completed' || updatedReport.riskAssessmentStatus === 'failed') {
           setReport(updatedReport);
-          clearInterval(interval);
+          if (intervalRef.current) clearInterval(intervalRef.current);
         }
-      }, 3000); // Poll every 3 seconds
-      
-      // Stop polling after 2 minutes (120 seconds)
-      setTimeout(() => clearInterval(interval), 120000);
+      }, 3000);
+      setTimeout(() => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      }, 120000);
     } catch (error) {
       console.error('Failed to trigger risk assessment:', error);
     }

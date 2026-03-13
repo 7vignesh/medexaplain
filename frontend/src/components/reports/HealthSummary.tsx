@@ -15,7 +15,7 @@ export default function HealthSummary({ summary }: HealthSummaryProps) {
         </div>
         <div className="flex-1">
           <h3 className="text-lg font-semibold text-gray-900 mb-2">AI Health Summary</h3>
-          <div className="prose prose-sm max-w-none">
+          <div className="text-sm">
             <p className="text-gray-700 leading-relaxed whitespace-pre-line">{summary}</p>
           </div>
         </div>
