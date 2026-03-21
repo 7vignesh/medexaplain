@@ -7,19 +7,31 @@ async function generateParameterExplanation(parameterName, value, unit, normalRa
   // Simple mock based on status
   const mockExplanations = {
     high: `• What it measures: Levels of ${parameterName} in your blood
+
 • Your result: ${value} is above normal range (normal: ${normalRange} ${unit})
+
 • What this means: Elevated levels may indicate metabolic changes
+
 • Common causes: Diet, stress, medication, or underlying condition
+
 • Quick tip: Consult your healthcare provider for further evaluation`,
     low: `• What it measures: Levels of ${parameterName} in your blood
+
 • Your result: ${value} is below normal range (normal: ${normalRange} ${unit})
+
 • What this means: Low levels may require dietary or lifestyle adjustments
+
 • Common causes: Nutritional deficiency, absorption issues, or increased demand
+
 • Quick tip: Discuss supplementation options with your doctor`,
     normal: `• What it measures: Levels of ${parameterName} in your blood
+
 • Your result: ${value} is within normal range (${normalRange} ${unit})
+
 • What this means: This value is healthy and within expected limits
+
 • Common causes: Good dietary intake, normal metabolism
+
 • Quick tip: Maintain current lifestyle and continue regular checkups`,
   };
 
