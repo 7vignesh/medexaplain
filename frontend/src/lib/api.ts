@@ -1,4 +1,6 @@
 import axios from 'axios';
+import type { AnalysisRequest, AnalysisResponse } from '@/types/analysis';
+import type { AnalysisResult, ApiResponse } from '@/types';
 
 /**
  * API client for backend communication
@@ -60,6 +62,14 @@ export const setAuthToken = (token: string | null) => {
   }
 };
 
+type ApiEnvelope<T> = ApiResponse<T>;
+
+type AnalysisJobHandle = {
+  analysisId: string;
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  cached?: boolean;
+};
+
 /**
  * API endpoints
  */
@@ -98,3 +108,29 @@ export const regenerateInsights = (id: string) =>
 
 export const generateRiskAssessment = (id: string, force: boolean = false) =>
   api.post(`/api/reports/${id}/risk-assessment?force=${force}`);
+
+// V2 Explainable analysis APIs (Type-safe versions)
+export const analyzeReport = (payload: AnalysisRequest): Promise<{ data: ApiEnvelope<AnalysisJobHandle> }> =>
+  api.post('/api/v2/analyze', payload);
+
+export const getAnalysisResult = (id: string): Promise<{ data: ApiEnvelope<AnalysisResult> }> =>
+  api.get(`/api/v2/result/${id}`);
+
+export const getAnalysisMetrics = () =>
+  api.get('/api/v2/metrics');
+
+export const getAnalysisHistory = (limit: number = 10) =>
+  api.get('/api/v2/history', { params: { limit } });
+
+export const askFollowUpQuestion = (payload: {
+  question: string;
+  contextResultId: string;
+  inputType?: 'text' | 'image';
+  textInput?: string;
+  reportSummary?: string;
+  parameters?: any[];
+  imageMeta?: Record<string, any>;
+  language?: string;
+  audienceMode?: 'doctor' | 'patient';
+}): Promise<{ data: ApiEnvelope<AnalysisJobHandle> }> =>
+  api.post('/api/v2/follow-up', payload);
