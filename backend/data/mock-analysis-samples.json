@@ -1,0 +1,79 @@
+[
+  {
+    "caseId": "mx-001",
+    "inputType": "text",
+    "textInput": "Patient report shows fasting glucose 142 mg/dL and HbA1c 7.1%.",
+    "reportSummary": "Metabolic panel with elevated glucose markers.",
+    "parameters": [
+      {
+        "name": "Fasting Glucose",
+        "value": "142",
+        "unit": "mg/dL",
+        "status": "high"
+      },
+      {
+        "name": "HbA1c",
+        "value": "7.1",
+        "unit": "%",
+        "status": "high"
+      }
+    ],
+    "language": "en",
+    "audienceMode": "patient"
+  },
+  {
+    "caseId": "mx-002",
+    "inputType": "text",
+    "textInput": "LDL cholesterol 176 mg/dL, HDL 37 mg/dL, triglycerides 245 mg/dL.",
+    "reportSummary": "Lipid profile with high cardiovascular risk indicators.",
+    "parameters": [
+      {
+        "name": "LDL",
+        "value": "176",
+        "unit": "mg/dL",
+        "status": "high"
+      },
+      {
+        "name": "HDL",
+        "value": "37",
+        "unit": "mg/dL",
+        "status": "low"
+      },
+      {
+        "name": "Triglycerides",
+        "value": "245",
+        "unit": "mg/dL",
+        "status": "high"
+      }
+    ],
+    "language": "es",
+    "audienceMode": "doctor"
+  },
+  {
+    "caseId": "mx-003",
+    "inputType": "image",
+    "textInput": "Creatinine elevated with reduced eGFR trend.",
+    "reportSummary": "Renal indicators outside expected range.",
+    "imageMeta": {
+      "fileName": "kidney-panel.png",
+      "width": 1280,
+      "height": 720
+    },
+    "parameters": [
+      {
+        "name": "Creatinine",
+        "value": "1.9",
+        "unit": "mg/dL",
+        "status": "high"
+      },
+      {
+        "name": "eGFR",
+        "value": "48",
+        "unit": "mL/min/1.73m2",
+        "status": "low"
+      }
+    ],
+    "language": "fr",
+    "audienceMode": "patient"
+  }
+]

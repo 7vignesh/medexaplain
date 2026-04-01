@@ -1,0 +1,528 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MedXplain API",
+    "description": "Explainable AI medical analysis system with structured reasoning and confidence scoring",
+    "version": "2.0.0",
+    "contact": {
+      "name": "MedXplain Support",
+      "email": "support@medexplain.com"
+    },
+    "license": {
+      "name": "Apache 2.0"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.medexplain.com",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:5000",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/api/v2/analyze": {
+      "post": {
+        "summary": "Perform medical analysis",
+        "description": "Analyze medical data (text/image) and return structured explanation with confidence scoring",
+        "operationId": "analyzeReport",
+        "tags": ["Analysis"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalysisRequest"
+              },
+              "examples": {
+                "text": {
+                  "value": {
+                    "inputType": "text",
+                    "textInput": "Patient with glucose 245 mg/dL, HbA1c 8.2%",
+                    "parameters": [
+                      {
+                        "name": "Glucose",
+                        "value": "245",
+                        "unit": "mg/dL",
+                        "status": "high"
+                      }
+                    ],
+                    "audienceMode": "patient"
+                  }
+                },
+                "image": {
+                  "value": {
+                    "inputType": "image",
+                    "imageMeta": {
+                      "fileName": "xray.jpg",
+                      "width": 1024,
+                      "height": 768
+                    },
+                    "audienceMode": "doctor"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Analysis completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - missing or invalid token"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          },
+          "500": {
+            "description": "Server error during analysis"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/result/{id}": {
+      "get": {
+        "summary": "Get analysis result by ID",
+        "description": "Retrieve a previously completed analysis by its ID",
+        "operationId": "getAnalysisResult",
+        "tags": ["Analysis"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Analysis result ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analysis result found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Analysis result not found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/follow-up": {
+      "post": {
+        "summary": "Ask follow-up question",
+        "description": "Ask a follow-up question about a previous analysis",
+        "operationId": "askFollowUp",
+        "tags": ["Analysis"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FollowUpRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Follow-up processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/history": {
+      "get": {
+        "summary": "Get analysis history",
+        "description": "Retrieve user's analysis history",
+        "operationId": "getAnalysisHistory",
+        "tags": ["Analysis"],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "description": "Number of results"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Analysis history",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AnalysisResponse"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/metrics": {
+      "get": {
+        "summary": "Get system metrics",
+        "description": "Retrieve system-wide analysis metrics and statistics",
+        "operationId": "getAnalysisMetrics",
+        "tags": ["Metrics"],
+        "responses": {
+          "200": {
+            "description": "System metrics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "description": "Check API health status",
+        "operationId": "healthCheck",
+        "tags": ["System"],
+        "responses": {
+          "200": {
+            "description": "Service healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "healthy"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalysisRequest": {
+        "type": "object",
+        "required": ["inputType"],
+        "properties": {
+          "inputType": {
+            "type": "string",
+            "enum": ["text", "image", "document"],
+            "description": "Type of input data"
+          },
+          "textInput": {
+            "type": "string",
+            "description": "Medical text data (for text input type)"
+          },
+          "imageMeta": {
+            "type": "object",
+            "properties": {
+              "fileName": { "type": "string" },
+              "width": { "type": "integer" },
+              "height": { "type": "integer" },
+              "format": { "type": "string" }
+            },
+            "description": "Image metadata (for image input type)"
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Parameter"
+            },
+            "description": "Medical parameters from lab results"
+          },
+          "audienceMode": {
+            "type": "string",
+            "enum": ["patient", "doctor"],
+            "default": "patient",
+            "description": "Explanation audience"
+          },
+          "language": {
+            "type": "string",
+            "default": "en",
+            "description": "Response language code"
+          }
+        }
+      },
+      "Parameter": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "example": "Glucose" },
+          "value": { "type": "string", "example": "245" },
+          "unit": { "type": "string", "example": "mg/dL" },
+          "normalRange": { "type": "string", "example": "70-100" },
+          "status": {
+            "type": "string",
+            "enum": ["normal", "high", "low", "critical"]
+          }
+        }
+      },
+      "AnalysisResponse": {
+        "type": "object",
+        "properties": {
+          "analysisId": { "type": "string" },
+          "diagnosis": { "type": "string" },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Confidence score 0-1"
+          },
+          "structuredExplanation": {
+            "$ref": "#/components/schemas/StructuredExplanation"
+          },
+          "heatmap": {
+            "$ref": "#/components/schemas/Heatmap"
+          },
+          "riskAssessment": {
+            "$ref": "#/components/schemas/RiskAssessment"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          }
+        }
+      },
+      "StructuredExplanation": {
+        "type": "object",
+        "properties": {
+          "observation": { "type": "string" },
+          "pattern": { "type": "string" },
+          "reasoning": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReasoningStep"
+            }
+          },
+          "diagnosis": { "type": "string" },
+          "confidence": { "type": "number" },
+          "confidenceExplanation": { "type": "string" },
+          "patientFriendlyExplanation": { "type": "string" },
+          "medicalExplanation": { "type": "string" }
+        }
+      },
+      "ReasoningStep": {
+        "type": "object",
+        "properties": {
+          "stepNumber": { "type": "integer" },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "observation",
+              "analysis",
+              "pattern_recognition",
+              "diagnosis",
+              "recommendation"
+            ]
+          },
+          "description": { "type": "string" },
+          "evidence": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "type": "number" }
+        }
+      },
+      "Heatmap": {
+        "type": "object",
+        "properties": {
+          "width": { "type": "integer" },
+          "height": { "type": "integer" },
+          "regions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HeatmapRegion"
+            }
+          },
+          "note": { "type": "string" }
+        }
+      },
+      "HeatmapRegion": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "x": { "type": "integer" },
+          "y": { "type": "integer" },
+          "w": { "type": "integer" },
+          "h": { "type": "integer" },
+          "intensity": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      },
+      "RiskAssessment": {
+        "type": "object",
+        "properties": {
+          "seriousnessLevel": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "diseaseRisks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "disease": { "type": "string" },
+                "riskPercentage": { "type": "number" },
+                "keyIndicators": { "type": "array", "items": { "type": "string" } },
+                "explanation": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "Metadata": {
+        "type": "object",
+        "properties": {
+          "latency": { "type": "integer", "description": "Response time in ms" },
+          "modelUsed": { "type": "string" },
+          "cacheHit": { "type": "boolean" },
+          "processingStages": {
+            "type": "object",
+            "properties": {
+              "vision": { "type": "integer" },
+              "llm": { "type": "integer" },
+              "explanation": { "type": "integer" },
+              "total": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "FollowUpRequest": {
+        "type": "object",
+        "required": ["question", "contextResultId"],
+        "properties": {
+          "question": { "type": "string" },
+          "contextResultId": { "type": "string" },
+          "audienceMode": {
+            "type": "string",
+            "enum": ["patient", "doctor"]
+          }
+        }
+      },
+      "MetricsResponse": {
+        "type": "object",
+        "properties": {
+          "totalAnalyses": { "type": "integer" },
+          "averageConfidence": { "type": "number" },
+          "averageLatency": { "type": "number" },
+          "cacheHitRate": { "type": "number" },
+          "errorRate": { "type": "number" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": false },
+          "error": { "type": "string" },
+          "message": { "type": "string" },
+          "validationErrors": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT authentication token"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Analysis",
+      "description": "Medical analysis operations"
+    },
+    {
+      "name": "Metrics",
+      "description": "System metrics and statistics"
+    },
+    {
+      "name": "System",
+      "description": "System health and status"
+    }
+  ]
+}
