@@ -40,8 +40,8 @@ export default function RecentReports() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Reports</h2>
+      <div className="glass-panel rounded-2xl p-6">
+        <h2 className="text-lg font-heading font-semibold text-gray-900 dark:text-slate-100 mb-4">Recent Reports</h2>
         <div className="flex justify-center py-8">
           <div className="spinner"></div>
         </div>
@@ -50,9 +50,9 @@ export default function RecentReports() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="glass-panel rounded-2xl p-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Recent Reports</h2>
+        <h2 className="text-lg font-heading font-semibold text-gray-900 dark:text-slate-100">Recent Reports</h2>
         <Link href="/reports" className="text-sm text-primary-600 hover:text-primary-700 font-medium">
           View all →
         </Link>
@@ -70,7 +70,7 @@ export default function RecentReports() {
             <Link
               key={report._id}
               href={`/reports/${report._id}`}
-              className="block p-4 border border-gray-200 rounded-lg hover:border-primary-300 hover:shadow-sm transition-all"
+              className="block p-4 border border-gray-200 dark:border-slate-700 rounded-xl hover:border-primary-300 dark:hover:border-primary-500/50 hover:shadow-sm transition-all"
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-start space-x-3 flex-1">

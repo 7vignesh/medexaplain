@@ -42,23 +42,24 @@ export default function DashboardPage() {
 
   if (authLoading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="page-shell flex items-center justify-center">
         <div className="spinner"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="page-shell bg-gray-50 dark:bg-slate-950">
       <Navbar />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Welcome back, {user.displayName || 'User'}!
+        <div className="mb-8 rounded-2xl border border-primary-100 dark:border-slate-700 bg-gradient-to-r from-emerald-100/80 via-cyan-100/75 to-amber-100/70 dark:from-emerald-900/20 dark:via-cyan-900/20 dark:to-amber-900/20 p-6 lift-on-hover">
+          <p className="text-xs uppercase tracking-[0.22em] text-gray-600 dark:text-slate-300 font-semibold">Health Intelligence Workspace</p>
+          <h1 className="mt-2 text-3xl sm:text-4xl font-heading font-bold text-gray-900 dark:text-slate-100">
+            Welcome back, <span className="headline-gradient">{user.displayName || 'User'}</span>
           </h1>
-          <p className="mt-2 text-sm text-gray-600">
-            Upload your medical reports and get AI-powered insights
+          <p className="mt-2 text-base text-gray-700 dark:text-slate-300 max-w-2xl">
+            Upload reports, run explainable AI analysis, compare trends, and ask contextual follow-up questions in one place.
           </p>
         </div>
 
@@ -76,7 +77,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Disclaimer */}
-        <div className="mt-8 bg-yellow-50 border-l-4 border-yellow-400 p-4">
+        <div className="mt-8 glass-panel rounded-xl border-l-4 border-yellow-500 p-4">
           <div className="flex">
             <div className="flex-shrink-0">
               <svg className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -84,7 +85,7 @@ export default function DashboardPage() {
               </svg>
             </div>
             <div className="ml-3">
-              <p className="text-sm text-yellow-700">
+              <p className="text-sm text-yellow-700 dark:text-yellow-200">
                 <strong>Important:</strong> This application is for informational purposes only and does not provide medical advice, diagnosis, or treatment. Always consult with qualified healthcare professionals for medical decisions.
               </p>
             </div>

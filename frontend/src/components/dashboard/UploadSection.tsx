@@ -16,7 +16,7 @@ export default function UploadSection() {
   const { getToken } = useAuth();
   const router = useRouter();
 
-  const performOCR = async (file: File): Promise<string> => {
+  const performOCR = async (file: File): Promise<string> => {   
     try {
       setOcrProgress(0);
       
@@ -27,7 +27,7 @@ export default function UploadSection() {
       const { data: { text } } = await worker.recognize(file);
       setOcrProgress(100);
       
-      await worker.terminate();
+      await worker.terminate(); 
       
       return text;
     } catch (error) {
@@ -88,15 +88,18 @@ export default function UploadSection() {
   });
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Upload Medical Report</h2>
+    <div className="glass-panel rounded-2xl p-6">
+      <div className="mb-4">
+        <p className="text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-slate-300 font-semibold">Input Zone</p>
+        <h2 className="text-lg font-heading font-semibold text-gray-900 dark:text-slate-100">Upload Medical Report</h2>
+      </div>
       
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+        className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-all duration-200 ${
           isDragActive
-            ? 'border-primary-500 bg-primary-50'
-            : 'border-gray-300 hover:border-primary-400 hover:bg-gray-50'
+            ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20 scale-[1.01]'
+            : 'border-gray-300 dark:border-slate-700 hover:border-primary-400 hover:bg-gray-50 dark:hover:bg-slate-900/60'
         } ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
         <input {...getInputProps()} />
@@ -129,11 +132,11 @@ export default function UploadSection() {
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-4">
-        <div className="flex items-center space-x-2 text-sm text-gray-600">
+        <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-slate-300">
           <FileText className="h-5 w-5 text-blue-500" />
           <span>PDF Reports</span>
         </div>
-        <div className="flex items-center space-x-2 text-sm text-gray-600">
+        <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-slate-300">
           <ImageIcon className="h-5 w-5 text-green-500" />
           <span>Image Scans</span>
         </div>

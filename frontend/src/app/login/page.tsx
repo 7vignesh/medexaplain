@@ -26,25 +26,25 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 to-secondary-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-4xl font-extrabold text-gray-900">
-            MedExplain
+          <h2 className="mt-6 text-center text-4xl font-heading font-extrabold headline-gradient">
+            MedXplain
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-slate-300">
             Sign in to your account
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-xl p-8">
+        <div className="glass-panel rounded-2xl p-8 border border-slate-700">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-slate-200">
                 Email address
               </label>
               <div className="mt-1 relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
                 <input
                   id="email"
                   name="email"
@@ -52,18 +52,18 @@ export default function LoginPage() {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-slate-700 bg-slate-900/70 text-slate-100 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   placeholder="you@example.com"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-slate-200">
                 Password
               </label>
               <div className="mt-1 relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
                 <input
                   id="password"
                   name="password"
@@ -71,7 +71,7 @@ export default function LoginPage() {
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-slate-700 bg-slate-900/70 text-slate-100 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
                   placeholder="••••••••"
                 />
               </div>
@@ -86,14 +86,14 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-gray-600">
+          <p className="mt-6 text-center text-sm text-slate-300">
             Don't have an account?{' '}
             <Link href="/signup" className="font-medium text-primary-600 hover:text-primary-500">
               Sign up
             </Link>
           </p>
 
-          <p className="mt-4 text-xs text-center text-gray-500">
+          <p className="mt-4 text-xs text-center text-slate-400">
             ⚠️ This application does not provide medical advice. Always consult healthcare professionals.
           </p>
         </div>

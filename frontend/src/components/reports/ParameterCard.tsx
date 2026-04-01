@@ -41,26 +41,26 @@ export default function ParameterCard({ parameter }: ParameterCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 hover:shadow-md transition-shadow">
+    <div className="bg-slate-900/85 rounded-xl shadow-sm border border-slate-700 p-5 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
-          <h3 className="text-sm font-semibold text-gray-900">{parameter.name}</h3>
+          <h3 className="text-sm font-semibold text-slate-100">{parameter.name}</h3>
           {parameter.category && (
-            <p className="text-xs text-gray-500 mt-1">{parameter.category}</p>
+            <p className="text-xs text-slate-400 mt-1">{parameter.category}</p>
           )}
         </div>
-        <Activity className="h-5 w-5 text-gray-400" />
+        <Activity className="h-5 w-5 text-cyan-300" />
       </div>
 
       <div className="mb-3">
         <div className="flex items-baseline space-x-2">
-          <span className="text-3xl font-bold text-gray-900">{parameter.value}</span>
+          <span className="text-3xl font-bold text-slate-100">{parameter.value}</span>
           {parameter.unit && (
-            <span className="text-sm text-gray-500">{parameter.unit}</span>
+            <span className="text-sm text-slate-400">{parameter.unit}</span>
           )}
         </div>
         {parameter.normalRange && (
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-slate-400 mt-1">
             Normal: {parameter.normalRange} {parameter.unit}
           </p>
         )}
@@ -74,8 +74,8 @@ export default function ParameterCard({ parameter }: ParameterCardProps) {
       </div>
 
       {parameter.explanation && (
-        <div className="mt-3 pt-3 border-t border-gray-100">
-          <p className="text-sm text-gray-700 leading-relaxed">{parameter.explanation}</p>
+        <div className="mt-3 pt-3 border-t border-slate-700">
+          <p className="text-sm text-slate-300 leading-relaxed">{parameter.explanation}</p>
         </div>
       )}
     </div>

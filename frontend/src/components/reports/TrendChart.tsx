@@ -53,7 +53,7 @@ export default function TrendChart({ parameterName }: TrendChartProps) {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <div className="bg-slate-900/85 rounded-xl shadow-sm border border-slate-700 p-6">
         <div className="flex justify-center py-8">
           <div className="spinner"></div>
         </div>
@@ -63,9 +63,9 @@ export default function TrendChart({ parameterName }: TrendChartProps) {
 
   if (trendData.length < 2) {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h4 className="text-sm font-medium text-gray-900 mb-2">{parameterName}</h4>
-        <p className="text-xs text-gray-500">Not enough data to show trend</p>
+      <div className="bg-slate-900/85 rounded-xl shadow-sm border border-slate-700 p-6">
+        <h4 className="text-sm font-medium text-slate-100 mb-2">{parameterName}</h4>
+        <p className="text-xs text-slate-400">Not enough data to show trend</p>
       </div>
     );
   }
@@ -107,8 +107,8 @@ export default function TrendChart({ parameterName }: TrendChartProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h4 className="text-sm font-medium text-gray-900 mb-4">{parameterName} Trend</h4>
+    <div className="bg-slate-900/85 rounded-xl shadow-sm border border-slate-700 p-6">
+      <h4 className="text-sm font-medium text-slate-100 mb-4">{parameterName} Trend</h4>
       <div style={{ height: '200px' }}>
         <Line data={chartData} options={options} />
       </div>

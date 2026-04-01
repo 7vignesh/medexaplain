@@ -58,52 +58,53 @@ export default function ReportsPage() {
 
   if (authLoading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="page-shell flex items-center justify-center">
         <div className="spinner"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="page-shell bg-gray-50 dark:bg-slate-950">
       <Navbar />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">My Reports</h1>
-          <p className="mt-2 text-sm text-gray-600">
+        <div className="mb-8 rounded-2xl border border-cyan-100 dark:border-slate-700 bg-gradient-to-r from-cyan-100/80 via-sky-100/70 to-emerald-100/70 dark:from-cyan-900/20 dark:via-slate-900/35 dark:to-emerald-900/20 p-6">
+          <p className="text-xs uppercase tracking-[0.22em] text-gray-600 dark:text-slate-300 font-semibold">Longitudinal Tracking</p>
+          <h1 className="text-3xl font-heading font-bold text-gray-900 dark:text-slate-100">My Reports</h1>
+          <p className="mt-2 text-sm text-gray-600 dark:text-slate-300">
             View and manage your medical reports
           </p>
         </div>
 
         {/* Filters */}
-        <div className="mb-6 flex space-x-2">
+        <div className="mb-6 flex flex-wrap gap-2">
           <button
             onClick={() => setFilter('all')}
-            className={`px-4 py-2 rounded-md text-sm font-medium ${
+            className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
               filter === 'all'
-                ? 'bg-primary-600 text-white'
-                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                ? 'bg-primary-600 text-white shadow-md'
+                : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200 border border-gray-300 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800'
             }`}
           >
             All Reports ({reports.length})
           </button>
           <button
             onClick={() => setFilter('normal')}
-            className={`px-4 py-2 rounded-md text-sm font-medium ${
+            className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
               filter === 'normal'
-                ? 'bg-primary-600 text-white'
-                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                ? 'bg-primary-600 text-white shadow-md'
+                : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200 border border-gray-300 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800'
             }`}
           >
             Normal ({normalCount})
           </button>
           <button
             onClick={() => setFilter('abnormal')}
-            className={`px-4 py-2 rounded-md text-sm font-medium ${
+            className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
               filter === 'abnormal'
-                ? 'bg-primary-600 text-white'
-                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                ? 'bg-primary-600 text-white shadow-md'
+                : 'bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200 border border-gray-300 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800'
             }`}
           >
             Abnormal ({abnormalCount})
@@ -116,7 +117,7 @@ export default function ReportsPage() {
             <div className="spinner"></div>
           </div>
         ) : filteredReports.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+          <div className="glass-panel rounded-2xl p-12 text-center">
             <FileText className="mx-auto h-12 w-12 text-gray-400" />
             <h3 className="mt-4 text-lg font-medium text-gray-900">No reports found</h3>
             <p className="mt-2 text-sm text-gray-500">
@@ -126,13 +127,13 @@ export default function ReportsPage() {
             </p>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+          <div className="glass-panel rounded-2xl overflow-hidden">
             <ul className="divide-y divide-gray-200">
               {filteredReports.map((report) => (
                 <li key={report._id}>
                   <Link
                     href={`/reports/${report._id}`}
-                    className="block hover:bg-gray-50 transition-colors"
+                    className="block hover:bg-gray-50 dark:hover:bg-slate-900/70 transition-colors"
                   >
                     <div className="px-6 py-4">
                       <div className="flex items-center justify-between">
