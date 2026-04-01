@@ -11,6 +11,7 @@ const rateLimiter = require('./middleware/rateLimiter');
 const authRoutes = require('./routes/auth.routes');
 const reportRoutes = require('./routes/report.routes');
 const userRoutes = require('./routes/user.routes');
+const analysisRoutes = require('./routes/analysis.routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -44,6 +45,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/v2', analysisRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);
