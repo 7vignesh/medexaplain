@@ -6,7 +6,11 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "jest --coverage",
+    "test": "jest --config jest.config.js --coverage",
+    "test:unit": "jest --config jest.config.js --runInBand",
+    "test:watch": "jest --config jest.config.js --watch",
+    "test:smoke": "node scripts/smoke.js",
+    "test:load": "node scripts/loadtest.js",
     "lint": "eslint src/**/*.js"
   },
   "keywords": [
